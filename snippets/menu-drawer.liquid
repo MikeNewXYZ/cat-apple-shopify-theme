@@ -84,9 +84,9 @@
                   x-show="open"
                 >
                   {% for child_link in link.links %}
-                    <li class="p-2 border-2 border-primary hover:border-dashed select-none cursor-pointer">
+                    <li class="border-2 border-primary hover:border-dashed select-none cursor-pointer">
                       <a
-                        class="w-full flex gap-2 items-center cursor-pointer"
+                        class="p-2 w-full flex gap-2 items-center cursor-pointer"
                         href="{{ child_link.url }}"
                       >
                         {% render 'icon',

@@ -1,0 +1,41 @@
+
+<div class="btn-group">
+  <a
+    {% if paginate.previous.is_link %}
+      class="btn btn-sm md:btn-md btn-outline"
+    {% else %}
+      class="btn btn-sm md:btn-md btn-outline btn-active pointer-events-none"
+    {% endif %}
+    href="{{ paginate.previous.url }}"
+  >
+    {% render 'icon',
+      type: 'chevron-left'
+    %}
+  </a>
+
+
+  {% for part in paginate.parts %}
+    {% if part.is_link %}
+      <a class="btn btn-sm md:btn-md btn-outline" href="{{ part.url }}">
+        {{ part.title }}
+      </a>
+    {% else %}
+      <a class="btn btn-sm md:btn-md btn-outline btn-active pointer-events-none">
+        {{ part.title }}
+      </a>
+    {% endif %}
+  {% endfor %}
+
+  <a
+    {% if paginate.next.is_link %}
+      class="btn btn-sm md:btn-md btn-outline"
+    {% else %}
+      class="btn btn-sm md:btn-md btn-outline btn-active pointer-events-none"
+    {% endif %}
+    href="{{ paginate.next.url }}"
+  >
+    {% render 'icon',
+      type: 'chevron-right'
+    %}
+  </a>
+</div>

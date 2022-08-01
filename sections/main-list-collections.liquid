@@ -1,0 +1,58 @@
+<hr class="divider divider-primary mt-0" />
+
+<h1 class="container text-center text-5xl md:text-6xl font-semibold pt-2 pb-4 md:pb-5">
+  Collections
+</h1>
+
+<hr class="divider divider-primary mb-8" />
+
+{% paginate collections by 2 %}
+  <div class="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+    {% for collection in collections %}
+      <div class="card card-compact w-full h-[30rem] bg-base-100 border-2 border-primary">
+        <figure class="border-b-2 border-b-primary flex-1 overflow-hidden">
+          <img
+            class="w-full h-full object-cover object-center"
+            src="{{ collection.featured_image | img_url: 'large' }}"
+            draggable="false"
+          />
+        </figure>
+        <div class="card-body flex-[1] overflow-hidden justify-between">
+          <div class="flex-1 mb-1">
+            <h2 class="card-title block truncate">
+              {{ collection.title }}
+            </h2>
+            <p>
+              {{ collection.description | truncate: 200, '...' }}
+            </p>
+          </div>
+
+          <div class="card-actions">
+            <a
+              class="btn btn-primary w-full"
+              href="{{ collection.url }}"
+            >
+              View Collection
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if paginate.pages > 1 %}
+    <div class="container mt-8 md:mt-10 flex justify-center">
+      {% render 'pagination',
+        paginate: paginate
+      %}
+    </div>
+  {% endif %}
+
+{% endpaginate %}
+
+{% schema %}
+{
+  "name": "List Collections",
+  "tag": "section"
+}
+{% endschema %}

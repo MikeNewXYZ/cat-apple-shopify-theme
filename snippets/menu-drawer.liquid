@@ -1,0 +1,110 @@
+<template x-teleport="body">
+  <aside
+    class="fixed inset-0 w-full h-screen pointer-events-none z-50"
+    x-cloak
+    x-show="showMenuDrawer"
+  >
+
+    {%- comment -%}
+      ANCHOR: Overlay
+    {%- endcomment -%}
+    <div
+      class="absolute w-full h-full bg-neutral bg-opacity-20 pointer-events-auto"
+      @click="showMenuDrawer = false"
+    ></div>
+
+    {%- comment -%}
+      ANCHOR: Drawer
+    {%- endcomment -%}
+    <div class="relative z-10 h-full w-[90%] sm:w-96 bg-base-100 border-r-2 border-r-primary pointer-events-auto flex flex-col gap-4">
+      {%- comment -%}
+        ANCHOR: Close Button
+      {%- endcomment -%}
+      <button
+        class="absolute -top-1.5 -right-1.5 btn btn-ghost btn-circle btn-sm opacity-50 hover:opacity-100"
+        @click="showMenuDrawer = false"
+      >
+        {% render 'icon',
+          type: 'x'
+        %}
+      </button>
+
+      {%- comment -%}
+        ANCHOR: Heading
+      {%- endcomment -%}
+      <h1 class="text-3xl font-bold p-2 pb-2.5 border-b-2 border-b-primary">
+        Menu
+      </h1>
+
+      {%- comment -%}
+        ANCHOR: Navigation Menu
+      {%- endcomment -%}
+      <nav class="flex-1 w-full overflow-hidden">
+        <ul class="flex flex-col gap-2 h-full overflow-y-auto">
+          {% for link in linklists.main-menu.links %}
+            {% if link.links == blank %}
+              <li class="p-2 border-y-2 border-y-primary hover:border-dashed select-none cursor-pointer">
+                <a
+                  class="w-full truncate block"
+                  href="{{ link.url }}"
+                >
+                  {{ link.title }}
+                </a>
+              </li>
+            {% else %}
+              <li
+                class="border-y-2 border-y-primary hover:border-dashed select-none"
+                x-data="{ open: false }"
+                :class="open && 'border-dashed'"
+              >
+                <button
+                  class="p-2 w-full flex gap-2 items-center cursor-pointer"
+                  @click="open =! open"
+                >
+                  <span x-show="!open">
+                    {% render 'icon',
+                      type: 'chevron-down'
+                    %}
+                  </span>
+
+                  <span x-show="open">
+                    {% render 'icon',
+                      type: 'chevron-up'
+                    %}
+                  </span>
+
+
+                  <span class="block flex-1 truncate text-left">
+                    {{ link.title }}
+                  </span>
+                </button>
+
+                <ul
+                  class="p-2 border-t-2 border-t-primary border-dashed flex flex-col gap-2"
+                  x-show="open"
+                >
+                  {% for child_link in link.links %}
+                    <li class="p-2 border-2 border-primary hover:border-dashed select-none cursor-pointer">
+                      <a
+                        class="w-full flex gap-2 items-center cursor-pointer"
+                        href="{{ child_link.url }}"
+                      >
+                        {% render 'icon',
+                          type: 'chevron-right'
+                        %}
+          
+                        <span class="block flex-1 truncate">
+                          {{ child_link.title }}
+                        </span>
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
+  </aside>
+</template>

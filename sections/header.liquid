@@ -1,3 +1,66 @@
+<div
+  class="navbar bg-base-100 border-b-2 border-b-primary"
+  x-data="header"
+>
+  <div class="navbar-start">
+    <button
+      class="btn btn-ghost btn-circle"
+      @click="showMenuDrawer = true"
+    >
+      {% render 'icon',
+        type: 'menu'
+      %}
+    </button>
+  </div>
+
+  <div class="navbar-center">
+    <a
+      class="btn btn-ghost normal-case text-xl"
+      href="{{ routes.root_url }}"
+    >
+      {{ shop.name }}
+    </a>
+  </div>
+
+  <div class="navbar-end">
+    <button
+      class="btn btn-ghost btn-circle"
+      @click="showSearchModal = true"
+    >
+      {% render 'icon',
+        type: 'search'
+      %}
+    </button>
+
+    <a
+      class="btn btn-ghost btn-circle"
+      href="{{ routes.cart_url }}"
+    >
+      <div class="indicator">
+        {% render 'icon',
+          type: 'shopping-bag'
+        %}
+        <span class="indicator-item text-xs -right-1 -top-1">
+          99+
+        </span>
+      </div>
+    </a>
+  </div>
+
+  {% render 'search-modal' %}
+
+  {% render 'menu-drawer' %}
+</div>
+
+<script>
+document.addEventListener("alpine:init", () => {
+  Alpine.data("header", () => ({
+    showSearchModal: false,
+    showMenuDrawer: false
+  }))
+})  
+</script>
+
 {% schema %}
 {
   "name": "Header",

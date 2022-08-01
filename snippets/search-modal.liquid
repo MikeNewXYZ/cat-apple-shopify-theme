@@ -1,0 +1,90 @@
+<template x-teleport="body">
+  <aside
+    class="fixed inset-0 w-full h-screen z-50"
+    x-cloak
+    x-show="showSearchModal"
+  >
+    {%- comment -%}
+      ANCHOR: Overlay
+    {%- endcomment -%}
+    <div
+      class="absolute inset-0 w-full h-full bg-neutral bg-opacity-20"
+      @click="showSearchModal = false"
+    ></div>
+
+    {%- comment -%}
+      ANCHOR: Main Content
+    {%- endcomment -%}
+    <div class="relative container flex justify-center items-center h-full pointer-events-none">
+      <div class="relative w-full md:w-3/4 lg:w-4/6 xl:w-1/2 h-[90%] bg-base-100 z-10 shadow-md rounded-sm border-2 border-primary flex flex-col gap-4 p-2 md:p-4 pointer-events-auto">
+        {%- comment -%}
+          ANCHOR: Close Button
+        {%- endcomment -%}
+        <button
+          class="absolute -top-1.5 -right-1.5 btn btn-ghost btn-circle btn-sm opacity-50 hover:opacity-100"
+          @click="showSearchModal = false"
+        >
+          {% render 'icon',
+            type: 'x'
+          %}
+        </button>
+
+        {%- comment -%}
+          ANCHOR: Search Box
+        {%- endcomment -%}
+        <input
+          class="input input-bordered input-primary input-md md:input-lg w-full"
+          type="text"
+          placeholder="Search Product"
+        />
+
+        {%- comment -%}
+          ANCHOR: Loading
+        {%- endcomment -%}
+        {%- comment -%}
+        <h1 class="text-center font-light text-2xl md:text-3xl">
+          Loading Products...
+        </h1>
+        {%- endcomment -%}
+
+        {%- comment -%}
+          ANCHOR: No Results
+        {%- endcomment -%}
+        {%- comment -%}
+        <div class="text-center font-light">
+          <h1 class="text-2xl md:text-3xl">
+            Sorry No Products Could Be Found
+          </h1>
+
+          <h3 class="text-xl md:text-2xl mt-2">
+            try searching something else
+          </h3>
+        </div>
+        {%- endcomment -%}
+
+        {%- comment -%}
+          ANCHOR: Search Result Items
+        {%- endcomment -%}
+        <div class="flex flex-col gap-2 flex-1 overflow-y-auto">
+          <div class="w-full flex-shrink-0 h-24 border-2 border-dashed border-primary p-2 flex gap-2">
+            <img
+              class="h-full aspect-square object-cover object-center border-2 border-primary"
+              src="https://placekitten.com/300/600"
+              draggable="false"
+            />
+
+            <button class="flex-1 flex flex-col justify-center gap-1 overflow-hidden pb-1">
+              <h1 class="text-xl sm:text-2xl font-bold uppercase truncate">
+                Main Category
+              </h1>
+
+              <h3 class="text-lg sm:text-xl font-semibold uppercase truncate">
+                Product Name
+              </h3>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</template>

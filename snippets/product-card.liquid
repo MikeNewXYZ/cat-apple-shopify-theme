@@ -1,0 +1,64 @@
+<div class="card card-compact w-full bg-base-100 border-2 border-primary">
+  <figure
+    class="h-60 border-b-2 border-primary bg-neutral relative overflow-hidden"
+    x-data="{ hover: false }"
+    @mouseEnter="hover = true"
+    @mouseLeave="hover = false"
+    :class="hover || 'p-2'"
+  >
+    <img
+      class="w-full h-full object-center z-10"
+      src="{{ product.featured_image | img_url: 'large' }}"
+      draggable="false"
+      :class="hover ? 'object-cover' : 'object-contain'"
+    />
+
+    <img
+      class="w-full h-full object-cover object-center blur-md absolute inset-0 scale-110 opacity-90"
+      src="{{ product.featured_image | img_url: 'small' }}"
+      draggable="false"
+    />
+  </figure>
+
+  <div class="card-body gap-0">
+    <h2 class="card-title">
+      {{ product.title }}
+    </h2>
+
+    <h3 class="text-2xl flex gap-2">
+      <span class="font-bold">
+        {{ product.price_min | money }}
+      </span>
+
+      {% if product.compare_at_price %}
+        <span class="line-through text-error font-semibold">
+          {{ product.compare_at_price | money }}
+        </span>
+      {% endif %}
+    </h3>
+
+    <div class="mt-auto">
+      <div class="flex gap-2 flex-wrap mt-6">
+        {% for collection in product.collections %}
+          <a
+            class="badge badge-primary badge-outline whitespace-nowrap hover:border-dashed"
+            href="{{ collection.url }}"
+          >
+            {{ collection.title }}
+          </a>
+        {% endfor %}
+      </div>
+
+      <hr class="divider divider-primary my-1" />
+
+      <div class="card-actions">
+        <a
+          class="btn btn-primary w-full"
+          href="{{ product.url }}"
+        >
+          View Product
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

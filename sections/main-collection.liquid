@@ -1,0 +1,130 @@
+<div x-data="collection">
+  <hr class="divider divider-primary mt-0" />
+
+  <h1 class="container text-center text-4xl md:text-6xl font-semibold mb-4 md:mb-6">
+    {{ collection.title }}
+  </h1>
+
+  <hr class="divider divider-primary" />
+
+  <div class="container flex flex-col md:flex-row justify-start md:justify-end gap-4">
+    <div class="form-control w-full max-w-xs">
+      <label class="label font-semibold">
+        Filter By
+      </label>
+  
+      <select
+        class="select select-bordered select-primary"
+        @change="(e) => setFilterBy(e.target.value)"
+      >
+        <option
+          value="all"
+          {% if current_tags == blank %}
+            selected
+          {% endif %}
+        >
+          All
+        </option>
+
+        {% for tag in collection.all_tags %}
+          <option
+            value="{{ tag }}"
+            {% if current_tags contains tag %}
+              selected
+            {% endif %}
+          >
+            {{ tag | capitalize }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+
+    <div class="form-control w-full max-w-xs">
+      <label class="label font-semibold">
+        Sort By
+      </label>
+  
+      <select
+        class="select select-bordered select-primary"
+        @change="(e) => setSortBy(e.target.value)"
+      >
+        {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+      
+        {% for option in collection.sort_options %}
+          <option value="{{ option.value }}" {% if option.value == sort_by %}selected="selected"{% endif %}>
+            {{ option.name }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  {% paginate collection.products by section.settings.pagination %}
+    <div class="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-14">
+      {% for product in collection.products %}
+        {% render 'product-card',
+          product: product
+        %}
+      {% endfor %}
+    </div>
+
+    {% if paginate.pages > 1 %}
+      <div class="container mt-8 md:mt-10 flex justify-center">
+        {% render 'pagination',
+          paginate: paginate
+        %}
+      </div>
+    {% endif %}
+  {% endpaginate %}
+</div>
+
+<script>
+document.addEventListener("alpine:init", () => {
+  Alpine.data("collection", () => ({
+    init() {
+      this.checkIfEnoughItemsForPage()
+    },
+    checkIfEnoughItemsForPage() {
+      const pagination = parseInt("{{ section.settings.pagination }}")
+      const collectionSize = parseInt("{{ collection.products.size }}")
+      const currentPage = parseInt(new URLSearchParams(location.search).get("page")) || 1
+
+      if (collectionSize <= (pagination * (currentPage - 1))) {
+        const params = new URLSearchParams(location.search)
+        params.set("page", 1)
+        location.search = params.toString()
+      }
+    },
+    setFilterBy(value) {
+      const defaultPath = "{{ routes.collections_url }}/{{ collection.handle }}"
+      const newPath = `${defaultPath}/${value}`
+      location.pathname = value === "all" ? defaultPath : newPath
+    },
+    setSortBy(value) {
+      const search = `?sort_by=${value}`
+      location.search = search
+    }
+  }))
+})
+</script>
+
+
+{% schema %}
+{
+  "name": "Collection",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "pagination",
+      "label": "Collection Pagination",
+      "info": "The amount of collection cards that are shown on each page.",
+      "min": 1,
+      "max": 40,
+      "step": 1,
+      "default": 12
+    }
+  ]
+}
+{% endschema %}

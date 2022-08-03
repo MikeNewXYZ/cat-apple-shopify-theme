@@ -1,6 +1,52 @@
+<section class="footer p-10 bg-base-200 text-base-content border-t-2 border-t-primary">
+  {% for link in linklists.footer.links %}
+    <div>
+      <span class="footer-title">
+        {{ link.title }}
+      </span>
+
+      {% if link.links != blank %}
+        {% for child_link in link.links %}
+          <a
+            class="link link-hover"
+            href="{{ child_link.url }}"
+          >
+            {{ child_link.title }}
+          </a> 
+        {% endfor %}
+      {% endif %}
+    </div>
+  {% endfor %}
+</section>
+
+<section class="footer px-10 py-4 border-t border-t-primary border-dashed bg-base-200 text-base-content border-base-300">
+  <div class="items-center grid-flow-col">
+    {% if settings.logo != blank %}
+      <img
+        class="w-7 h-7 object-contain object-center"
+        src="{{ settings.logo | img_url: 'small' }}"
+        draggable="false"
+      />
+    {% endif %}
+
+    <p>&copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: '/' }}</p>
+
+    <p>{{ powered_by_link }}</p>
+  </div> 
+  <div class="md:place-self-center md:justify-self-end">
+    <div class="grid grid-flow-col gap-4">
+      {% render 'social-list',
+        list_class: 'flex flex-wrap gap-3',
+        social_list_icon_class: 'w-6 h-6'
+      %}
+    </div>
+  </div>
+</section>
+
 {% schema %}
 {
-  "name": "Header",
-  "tag": "footer"
+  "name": "Footer",
+  "tag": "footer",
+  "class": "mt-auto"
 }
 {% endschema %}

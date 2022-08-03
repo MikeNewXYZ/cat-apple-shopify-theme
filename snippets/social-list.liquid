@@ -1,0 +1,100 @@
+<ul class="{{ list_class }}" role="list">
+  {%- if settings.social_twitter_link != blank -%}
+    <li class="{{ list_item_class }}">
+      <a href="{{ settings.social_twitter_link }}" class="{{ social_list_link_class }}">
+        {%- render 'icon',
+          type: 'twitter',
+          class: social_list_icon_class
+        -%}
+      </a>
+    </li>
+  {%- endif -%}
+
+  {%- if settings.social_facebook_link != blank -%}
+    <li class="{{ list_item_class }}">
+      <a href="{{ settings.social_facebook_link }}" class="{{ social_list_link_class }}">
+        {%- render 'icon',
+          type: 'facebook',
+          class: social_list_icon_class
+        -%}
+      </a>
+    </li>
+  {%- endif -%}
+
+  {%- if settings.social_pinterest_link != blank -%}
+    <li class="{{ list_item_class }}">
+      <a href="{{ settings.social_pinterest_link }}" class="{{ social_list_link_class }}">
+        {%- render 'icon',
+          type: 'pinterest',
+          class: social_list_icon_class
+        -%}
+      </a>
+    </li>
+  {%- endif -%}
+
+  {%- if settings.social_instagram_link != blank -%}
+    <li class="{{ list_item_class }}">
+      <a href="{{ settings.social_instagram_link }}" class="{{ social_list_link_class }}">
+        {%- render 'icon',
+          type: 'instagram',
+          class: social_list_icon_class
+        -%}
+      </a>
+    </li>
+  {%- endif -%}
+
+  {%- if settings.social_tiktok_link != blank -%}
+    <li class="{{ list_item_class }}">
+      <a href="{{ settings.social_tiktok_link }}" class="{{ social_list_link_class }}">
+        {%- render 'icon',
+          type: 'tiktok',
+          class: social_list_icon_class
+        -%}
+      </a>
+    </li>
+  {%- endif -%}
+
+  {%- if settings.social_tumblr_link != blank -%}
+    <li class="{{ list_item_class }}">
+      <a href="{{ settings.social_tumblr_link }}" class="{{ social_list_link_class }}">
+        {%- render 'icon',
+          type: 'tumblr',
+          class: social_list_icon_class
+        -%}
+      </a>
+    </li>
+  {%- endif -%}
+
+  {%- if settings.social_snapchat_link != blank -%}
+    <li class="{{ list_item_class }}">
+      <a href="{{ settings.social_snapchat_link }}" class="{{ social_list_link_class }}">
+        {%- render 'icon',
+          type: 'snapchat',
+          class: social_list_icon_class
+        -%}
+      </a>
+    </li>
+  {%- endif -%}
+
+  {%- if settings.social_youtube_link != blank -%}
+    <li class="{{ list_item_class }}">
+      <a href="{{ settings.social_youtube_link }}" class="{{ social_list_link_class }}">
+        {%- render 'icon',
+          type: 'youtube',
+          class: social_list_icon_class
+        -%}
+      </a>
+    </li>
+  {%- endif -%}
+
+  {% if settings.social_vimeo_link != blank %}
+    <li class="{{ list_item_class }}">
+      <a href="{{ settings.social_vimeo_link }}" class="{{ social_list_link_class }}">
+        {%- render 'icon',
+          type: 'vimeo',
+          class: social_list_icon_class
+        -%}
+      </a>
+    </li>
+  {% endif %}
+</ul>

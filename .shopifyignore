@@ -11,4 +11,5 @@ yarn.lock
 .prettierignore
 .gitignore
 tailwind.config.js
+.vscode
 src

@@ -40,8 +40,10 @@
         {% render 'icon',
           type: 'shopping-bag'
         %}
-        <span class="indicator-item text-xs -right-1 -top-1">
-          99+
+        <span
+          class="indicator-item text-xs -right-1 -top-1"
+          x-text="$store.cart.data.item_count"
+        >
         </span>
       </div>
     </a>

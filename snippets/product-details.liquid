@@ -1,0 +1,155 @@
+<div
+  class="flex-1 w-full flex flex-col"
+  x-data="productDetails"
+>
+  <h1 class="text-4xl font-semibold">
+    {{ product.title }}
+  </h1>
+  
+  {% if product.collections != blank %}
+    <div class="mt-2 flex flex-wrap gap-2">
+      {% for collection in product.collections %}
+        <a
+          class="badge badge-primary"
+          href="{{ collection.url }}"
+        >
+          {{ collection.title }}
+        </a>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="mt-4 text-3xl font-semibold flex gap-4">
+    <h3
+      x-text="Shopify.formatMoney(
+        currentVariant.price,
+        '{{ cart.currency.symbol }}'
+      )"
+    >
+    </h3>
+
+    <template x-if="currentVariant.compare_at_price">
+      <h3
+        class="line-through text-error"
+        x-text="Shopify.formatMoney(
+          currentVariant.compare_at_price,
+          '{{ cart.currency.symbol }}'
+        )"
+      >
+      </h3>
+    </template>
+  </div>
+
+  {% if product.images != blank %}
+    <div class="lg:flex-1 w-full block lg:hidden mt-6">
+      {% render 'image-carousel',
+        images: product.images
+      %}
+    </div>
+  {% endif %}
+
+  {% unless product.has_only_default_variant %}
+    <h3 class="font-semibold text-3xl mt-8">
+      Options
+    </h3>
+
+    <hr class="divider divider-primary mt-1 mb-0" />
+
+    <form @change="setCurrentVariant($el)">
+      {% for option in product.options_with_values %}
+        <div class="form-control w-full max-w-xs mt-2">
+          <label
+            class="label"
+            for="option{{ forloop.index }}"
+          >
+            {{ option.name }}
+          </label>
+
+          <select
+            class="select select-bordered select-primary"
+            name="option{{ forloop.index }}"
+            id="option{{ forloop.index }}"
+          >
+            {% for value in option.values %}
+              <option
+                value="{{ value }}"
+                {% if option.selected_value == value %}
+                  selected
+                {% endif %}
+              >
+                {{ value }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      {% endfor %}
+    </form>        
+  {% endunless %}
+
+  <div
+    {% if product.images != blank %}
+      class="flex flex-col lg:flex-row gap-4 mt-10 lg:mt-auto lg:items-end"
+    {% else %}
+      class="flex flex-col gap-4 mt-10 lg:mt-auto lg:items-end max-w-md"
+    {% endif %}
+  >
+    <div class="form-control flex-1 w-full">
+      <label class="label font-semibold">
+        Quantity
+      </label>
+      <input
+        class="input input-lg input-bordered input-primary w-full"
+        type="number"
+        value="1"
+        min="1"   
+        @change="(e) => quantity = e.target.value"       
+      />
+    </div>
+
+    <button
+      class="btn text-xl btn-lg flex-1 w-full gap-2"
+      @click="$store.cart.add([{ id: currentVariant.id, quantity: quantity }])"
+    >
+      {% render 'icon',
+        type: 'shopping-bag',
+        class: 'w-6 h-6 mb-0.5'
+      %}
+
+      <span>Add to Cart</span>
+    </button>
+  </div>
+</div>
+
+<script>
+document.addEventListener("alpine:init", () => {
+  Alpine.data("productDetails", () => ({
+    productData: {{ product | json }},
+    currentVariant: {{ product.selected_or_first_available_variant | json }},
+    quantity: 1,
+    init() {
+      this.$watch('currentVariant', this.setUrlSearchVariant)
+    },
+    setCurrentVariant(el) {
+      const rawFormData = new FormData(el)
+      const options = Object.fromEntries(rawFormData.entries())
+      
+      const option1 = options.option1 || null
+      const option2 = options.option2 || null
+      const option3 = options.option3 || null
+
+      this.productData.variants.forEach((variant) => {
+        if (
+          variant.option1 !== option1 ||
+          variant.option2 !== option2 ||
+          variant.option3 !== option3
+        ) return
+
+        this.currentVariant = variant
+      })
+    },
+    setUrlSearchVariant({ id }) {
+      history.pushState({variant: id}, "", `?variant=${id}`)
+    }
+  }))
+})
+</script>

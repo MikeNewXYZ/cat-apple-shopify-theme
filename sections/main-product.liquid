@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="w-full lg:h-[50rem] flex flex-row">
+    {% if product.images != blank %}
+      <div class="lg:flex-1 w-full hidden lg:block">
+        {% render 'image-carousel',
+          images: product.images
+        %}
+      </div>
+
+      <hr class="divider divider-horizontal divider-primary hidden lg:flex" />
+    {% endif %}
+
+    {% render 'product-details' %}
+  </div>
+
+  <div class="mt-12">
+    {% render 'product-description' %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product",
+  "tag": "section"
+}
+{% endschema %}

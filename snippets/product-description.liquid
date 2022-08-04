@@ -1,0 +1,49 @@
+<div x-data="{ tab: 'description' }">
+  <div class="tabs tabs-boxed bg-transparent w-fit gap-y-4">
+    <button
+      class="tab lg:tab-lg text-xl lg:text-2xl font-semibold pb-1"
+      :class="tab === 'description' && 'tab-active'"
+      @click="tab = 'description'"
+    >
+      Description
+    </button>
+
+    <button
+      class="tab lg:tab-lg text-xl lg:text-2xl font-semibold pb-1"
+      :class="tab === 'shippingPolicy' && 'tab-active'"
+      @click="tab = 'shippingPolicy'"
+    >
+      {{ shop.shipping_policy.title }}
+    </button>
+
+    <button
+      class="tab lg:tab-lg text-xl lg:text-2xl font-semibold pb-1"
+      :class="tab === 'refundPolicy' && 'tab-active'"
+      @click="tab = 'refundPolicy'"
+    >
+      {{ shop.refund_policy.title }}
+    </button>
+  </div>
+
+  <hr class="divider divider-primary mt-0" />
+
+  <div class="text-xl">
+    <template x-if="tab === 'description'">
+      <p>
+        {{ product.description }}
+      </p>
+    </template>
+
+    <template x-if="tab === 'shippingPolicy'">
+      <div>
+        {{ shop.shipping_policy.body }}
+      </div>
+    </template>
+
+    <template x-if="tab === 'refundPolicy'">
+      <div>
+        {{ shop.refund_policy.body }}
+      </div>
+    </template>
+  </div>
+</div>

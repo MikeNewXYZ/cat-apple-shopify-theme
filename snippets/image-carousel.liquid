@@ -1,0 +1,97 @@
+<div
+  class="w-full h-full flex flex-col"
+  x-data="imageCarousel"
+>
+  <figure class="w-full min-h-[10rem] sm:min-h-[30rem] flex-1 p-2 border-4 border-primary relative overflow-hidden">
+    <img
+      class="relative w-full h-full object-contain object-center z-10 shadow-md"
+      :src="images[currentImageIndex]"
+      draggable="false"
+    />
+
+    <img
+      class="absolute inset-0 w-full h-full object-cover object-center scale-110 blur-md"
+      :src="images[currentImageIndex]"
+      draggable="false"
+    />
+  </figure>
+
+  <div
+    class="grid grid-cols-3 grid-rows-1 gap-4 mt-4 h-28 sm:h-44"
+    x-show="images.length > 1"
+  >
+    <figure
+      class="w-full h-full relative border-2 border-primary hover:border-dashed cursor-pointer"
+      @click="previousImage"
+    >
+      <button class="absolute inset-0 w-full h-full flex justify-center items-center z-20 text-base-100">
+        {% render 'icon',
+          type: 'chevron-left',
+          class: 'w-24 h-24'
+        %}
+      </button>
+
+      <div
+        class="absolute inset-0 w-full h-full bg-neutral bg-opacity-25 z-10"
+      ></div>
+
+      <img
+        class="w-full h-full object-cover object-center"
+        draggable="false"
+        :src="currentImageIndex === 0 ? images[images.length - 1] : images[currentImageIndex - 1]"
+      />
+    </figure>
+
+
+    <img
+      class="w-full h-full object-cover object-center border-4 border-primary"
+      draggable="false"
+      :src="images[currentImageIndex]"
+    />
+
+    <figure
+      class="w-full h-full relative border-2 border-primary hover:border-dashed cursor-pointer"
+      @click="nextImage"
+    >
+      <button class="absolute inset-0 w-full h-full flex justify-center items-center z-20 text-base-100">
+        {% render 'icon',
+          type: 'chevron-right',
+          class: 'w-24 h-24'
+        %}
+      </button>
+
+      <div
+        class="absolute inset-0 w-full h-full bg-neutral bg-opacity-25 z-10"
+      ></div>
+
+      <img
+        class="w-full h-full object-cover object-center"
+        draggable="false"
+        :src="currentImageIndex >= images.length - 1 ? images[0] : images[currentImageIndex + 1]"
+      />
+    </figure>
+  </div>
+</div>
+
+<script>
+document.addEventListener("alpine:init", () => {
+  Alpine.data("imageCarousel", () => ({
+    images: {{ images | json }},
+    currentImageIndex: 0,
+    nextImage() {
+      if (this.currentImageIndex >= this.images.length - 1) {
+        this.currentImageIndex = 0
+      } else {
+        this.currentImageIndex = this.currentImageIndex + 1
+      }
+    },
+    previousImage() {
+      if (this.currentImageIndex === 0) {
+        this.currentImageIndex = this.images.length - 1
+      } else {
+        this.currentImageIndex = this.currentImageIndex - 1
+      }
+    }
+  }))
+})
+</script>

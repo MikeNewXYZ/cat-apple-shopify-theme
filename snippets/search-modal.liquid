@@ -3,6 +3,7 @@
     class="fixed inset-0 w-full h-screen z-50"
     x-cloak
     x-show="showSearchModal"
+    x-data="searchModal"
   >
     {%- comment -%}
       ANCHOR: Overlay
@@ -36,55 +37,101 @@
           class="input input-bordered input-primary input-md md:input-lg w-full"
           type="text"
           placeholder="Search Product"
+          @input.debounce.750="(e) => searchProduct(e.target.value)"
         />
 
         {%- comment -%}
           ANCHOR: Loading
         {%- endcomment -%}
-        {%- comment -%}
-        <h1 class="text-center font-light text-2xl md:text-3xl">
-          Loading Products...
-        </h1>
-        {%- endcomment -%}
+        <template x-if="loading">
+          <h1 class="text-center font-light text-2xl md:text-3xl">
+            Loading Products...
+          </h1>
+        </template>
+
 
         {%- comment -%}
           ANCHOR: No Results
         {%- endcomment -%}
-        {%- comment -%}
-        <div class="text-center font-light">
-          <h1 class="text-2xl md:text-3xl">
-            Sorry No Products Could Be Found
-          </h1>
+        <template x-if="!loading && searchResults.length === 0">
+          <div class="text-center font-light">
+            <h1 class="text-2xl md:text-3xl">
+              Sorry No Products Could Be Found
+            </h1>
+  
+            <h3 class="text-xl md:text-2xl mt-2">
+              try searching something else
+            </h3>
+          </div>
+        </template>
 
-          <h3 class="text-xl md:text-2xl mt-2">
-            try searching something else
-          </h3>
-        </div>
-        {%- endcomment -%}
 
         {%- comment -%}
           ANCHOR: Search Result Items
         {%- endcomment -%}
-        <div class="flex flex-col gap-2 flex-1 overflow-y-auto">
-          <div class="w-full flex-shrink-0 h-24 border-2 border-dashed border-primary p-2 flex gap-2">
-            <img
-              class="h-full aspect-square object-cover object-center border-2 border-primary"
-              src="https://placekitten.com/300/600"
-              draggable="false"
-            />
-
-            <button class="flex-1 flex flex-col justify-center gap-1 overflow-hidden pb-1">
-              <h1 class="text-xl sm:text-2xl font-bold uppercase truncate">
-                Main Category
-              </h1>
-
-              <h3 class="text-lg sm:text-xl font-semibold uppercase truncate">
-                Product Name
-              </h3>
-            </button>
+        <template x-if="!loading && searchResults.length > 0">
+          <div class="flex flex-col gap-2 flex-1 overflow-y-auto">
+            <template x-for="product in searchResults">
+              <a
+                class="w-full flex-shrink-0 h-24 border-2 border-dashed border-primary p-2 flex gap-2"
+                :href="product.url"
+              >
+                <img
+                  class="h-full aspect-square object-cover object-center border-2 border-primary"
+                  draggable="false"
+                  :src="product.featured_image.url"
+                />
+    
+                <div class="flex-1 flex flex-col justify-center gap-1 overflow-hidden pb-1 text-left h-full">
+                  <h1
+                    class="text-xl sm:text-2xl font-bold uppercase truncate w-full"
+                    x-text="product.title"
+                  >
+                  </h1>
+    
+                  <div
+                    class="text-lg sm:text-xl font-semibold uppercase w-full truncate"
+                  >
+                    <template x-for="tag in product.tags">
+                      <div
+                        class="badge badge-sm md:badge-md mr-2"
+                        x-text="tag"  
+                      >
+                      </div>
+                    </template>
+                  </div>
+                </div>
+              </a>
+            </template>
           </div>
-        </div>
+        </template>
       </div>
     </div>
   </aside>
 </template>
+
+<script class="hidden">
+  document.addEventListener("alpine:init", () => {
+    Alpine.data("searchModal", () => ({
+      searchResults: [],
+      loading: false,
+      async searchProduct(search) {
+        if (!search) {
+          this.searchResults = []
+          return
+        }
+
+        this.loading = true
+
+        const searchQuery = `?q=${search}&resources[type]=product&resources[options][unavailable_products]=hide`
+        const response = await fetch(window.Shopify.routes.root + `search/suggest.json${searchQuery}`)
+        const data = await response.json()
+
+        this.loading = false
+
+        this.searchResults = data.resources.results.products
+      }
+    }))
+  })
+</script>
+

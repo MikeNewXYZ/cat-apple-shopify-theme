@@ -1,0 +1,87 @@
+<div>
+  <div class="flex flex-col lg:grid lg:grid-cols-7 gap-4 lg:h-48 overflow-hidden p-2 mb-5">
+    <div class="h-full w-full col-span-4 overflow-hidden flex flex-col lg:flex-row gap-4">
+      <figure class="w-full lg:w-auto lg:h-full aspect-square overflow-hidden border-2 border-primary">
+        <img
+          class="w-full h-full object-cover object-center"
+          draggable="false"
+          :src="cartItem.image"
+        />
+      </figure>
+
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <h6
+          class="text-xl font-semibold lg:truncate"
+          x-text="cartItem.product_title"
+        >
+        </h6>
+
+        <ul class="mt-2">
+          <template x-for="option in cartItem.options_with_values">
+            <li>
+              <span
+                class="font-semibold"
+                x-text="`${option.name}:`"
+              >
+              </span>
+
+              <span x-text="option.value"></span>
+            </li>
+          </template>
+        </ul>
+
+        <button
+          class="btn btn-error max-w-[8rem] btn-xs lg:mt-auto hidden lg:flex"
+          @click="$store.cart.change({ line: index + 1, quantity: 0 })"  
+        >
+          Remove
+        </button>
+      </div>
+    </div>
+
+    <div class="col-span-1 form-control w-full max-w-xs lg:max-w-none">
+      <label class="label block lg:hidden font-semibold">
+        Quantity
+      </label>
+
+      <input
+        class="input input-bordered input-primary w-full"
+        type="number"
+        min="1"
+        :value="cartItem.quantity"
+        @change="(e) => $store.cart.change({ line: index + 1, quantity: e.target.value })"
+      />
+    </div>
+
+    <div class="col-span-2 lg:text-right flex lg:flex-col lg:justify-between items-center lg:items-end gap-4 mt-8 lg:mt-[initial]">
+      <div class="font-semibold text-2xl">
+        <span class="inline lg:hidden">Total:</span>
+
+        <span
+          x-text="Shopify.formatMoney(
+            cartItem.final_line_price,
+            '{{ cart.currency.symbol }}'        
+          )"
+        >
+        </span>
+      </div>
+
+
+      <button
+        class="btn btn-error max-w-[8rem] btn-xs lg:mt-auto flex lg:hidden ml-auto"
+        @click="$store.cart.change({ line: index + 1, quantity: 0 })"  
+      >
+        Remove
+      </button>
+
+      <a
+        class="btn btn-info max-w-[10rem] btn-xs"
+        :href="cartItem.url"
+      >
+        View Product
+      </a>
+    </div>
+  </div>
+
+  <hr class="divider divider-primary" />
+</div>

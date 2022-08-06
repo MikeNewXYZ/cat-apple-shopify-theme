@@ -1,0 +1,27 @@
+{
+  "wrapper": ".flex.flex-col.gap-16",
+  "sections": {
+    "image_and_text": {
+      "type": "image-and-text",
+      "blocks": {
+        "heading": {
+          "type": "heading"
+        },
+        "description": {
+          "type": "description"
+        }  ,
+        "button": {
+          "type": "button"
+        }  
+      },
+      "block_order": [
+        "heading",
+        "description",
+        "button"
+      ]
+    }
+  },
+  "order": [
+    "image_and_text"
+  ]
+}

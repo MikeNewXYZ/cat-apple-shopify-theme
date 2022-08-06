@@ -6,6 +6,7 @@ module.exports = {
     "./sections/*.liquid",
     "./snippets/*.liquid",
     "./templates/**/*.liquid",
+    "./templates/**/*.json"
   ],
   theme: {
     container: {

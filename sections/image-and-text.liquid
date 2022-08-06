@@ -1,0 +1,154 @@
+<div
+  class="container grid grid-cols-2 grid-rows-1 gap-8 items-center overflow-hidden dir"
+  style="height: {{ section.settings.section_height }}px;"
+>
+  <div
+    class="col-span-1"
+    style="order: {{ section.settings.order }};"
+  >
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'heading' %}
+          <h1 class="text-3xl md:text-4xl font-semibold">
+            {{ block.settings.heading_text }}
+          </h1>
+        {% when 'description' %}
+          <div class="mt-6">
+            {{ block.settings.description_richtext }}
+          </div>
+        {% when 'button' %}
+          <a
+            class="btn btn-primary text-xl w-full max-w-xs mt-8"
+            href="{{ block.settings.button_url }}"
+          >
+            {{ block.settings.button_text }}
+          </a>
+      {% endcase %}
+    {% endfor %}
+  </div>
+  
+  <figure class="col-span-1 border-4 border-primary h-full">
+    <img
+      class="w-full h-full object-center"
+      style="object-fit: {{ section.settings.image_fit }};"
+      src="{{ section.settings.main_image | img_url: 'master' }}"
+      draggable="false"
+    />
+  </figure>
+</div>
+
+{% schema %}
+{
+  "name": "Image and Text",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "order",
+      "label": "Order",
+      "default": "0",
+      "options": [
+        {
+          "value": "0",
+          "label": "Text then Image"
+        },
+        {
+          "value": "1",
+          "label": "Image then Text"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "section_height",
+      "label": "Section Height",
+      "unit": "px",
+      "min": 300,
+      "max": 1000,
+      "step": 50,
+      "default": 500
+    },
+    {
+      "type": "image_picker",
+      "id": "main_image",
+      "label": "Main Image"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image Fit",
+      "default": "cover",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Cover"
+        },
+        {
+          "value": "contain",
+          "label": "Contain"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "name": "Heading",
+      "type": "heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading_text",
+          "label": "Heading Text",
+          "default": "Lorem ipsum dolor sit!"
+        }
+      ]
+    },
+    {
+      "name": "Description",
+      "type": "description",
+      "settings": [
+        {
+          "type": "text",
+          "id": "description_richtext",
+          "label": "Description Text",
+          "default": "<p><b>Aliquip ad duis irure officia</b> eu minim sit sint ea veniam reprehenderit deserunt velit ea. Ex commodo cupidatat Lorem nisi laborum eu adipisicing sit eiusmod occaecat do proident. Ullamco voluptate laboris anim eu do consequat ipsum quis tempor ea sit deserunt deserunt incididunt. Incididunt fugiat laborum veniam cillum esse ad ad incididunt magna sint excepteur est. Deserunt reprehenderit consectetur officia incididunt quis laboris sunt. Officia quis laboris magna commodo consectetur ea. In eiusmod commodo culpa excepteur ullamco ex labore in anim ea est elit amet aliquip.</p>"
+        }
+      ]
+    },
+    {
+      "name": "Button",
+      "type": "button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Lorem Ipsum"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image and Text",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "description"
+        },
+        {
+          "type": "button"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

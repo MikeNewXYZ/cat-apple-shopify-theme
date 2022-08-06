@@ -1,0 +1,88 @@
+{% form 'contact',
+  class: 'container max-w-lg'
+%}
+  {% if form.posted_successfully? %}
+    <p class="text-success">
+      Thanks for contacting us! We'll get back to you as soon as possible.
+    </p>
+  {% endif %}
+
+  <ul class="flex flex-col gap-8 mt-4">
+    <li class="form-control w-full">
+      <label class="label" for="name">
+        Name
+      </label>
+
+      <input
+        class="input textarea-primary input-bordered w-full"
+        type="text"
+        id="name"
+        name="contact[name]"
+      />
+    </li>
+
+    <li class="form-control w-full">
+      <label class="label" for="email">
+        Email
+      </label>
+
+      {% if form.errors contains 'body' %}
+        {% assign input_style = 'input-error' %}
+      {% else %}
+        {% assign input_style = 'input-primary' %}
+      {% endif %}
+
+      <input
+        class="input input-bordered w-full {{ input_style }}"
+        type="email"
+        id="email"
+        name="contact[email]"
+      />
+
+      {% if form.errors contains 'email' %}
+        <label class="label text-error">
+          Please enter a valid email address.
+        </label>
+      {% endif %}
+    </li>
+
+    <li class="form-control w-full">
+      <label class="label" for="message">
+        Message
+      </label>
+
+      {% if form.errors contains 'body' %}
+        {% assign textarea_style = 'textarea-error' %}
+      {% else %}
+        {% assign textarea_style = 'textarea-primary' %}
+      {% endif %}
+
+      <textarea
+        class="textarea w-full h-52 {{ textarea_style }}"
+        id="message"
+        name="contact[body]"
+      ></textarea>
+
+      {% if form.errors contains 'body' %}
+        <label class="label text-error">
+          Your message cannot be blank.
+        </label>
+      {% endif %}
+    </li> 
+
+    <li class="mt-10">
+      <input
+        class="btn btn-primary btn-lg text-2xl w-full"
+        type="submit"
+        value="Send"
+      />
+    </li>
+  </ul>
+{% endform %}
+
+{% schema %}
+{
+  "name": "Contact Form",
+  "tag": "section"
+}
+{% endschema %}

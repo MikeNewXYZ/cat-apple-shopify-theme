@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require("tailwindcss/defaultTheme")
+
 module.exports = {
   content: [
     "./assets/*.js",
@@ -12,6 +14,11 @@ module.exports = {
     container: {
       center: true,
       padding: "1rem"
+    },
+    extend: {
+      screens: {
+        "max-lg": {"max": defaultTheme.screens.lg}
+      }
     }
   },
   daisyui: {

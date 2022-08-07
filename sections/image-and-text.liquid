@@ -1,10 +1,7 @@
-<div
-  class="container grid grid-cols-2 grid-rows-1 gap-8 items-center overflow-hidden dir"
-  style="height: {{ section.settings.section_height }}px;"
->
+<div class="container grid lg:grid-cols-2 grid-rows-1 gap-8 items-center overflow-hidden">
   <div
-    class="col-span-1"
-    style="order: {{ section.settings.order }};"
+    class="col-span-1 max-lg:order-[0_!important]"
+    style="order: {{ section.settings.order }}"
   >
     {% for block in section.blocks %}
       {% case block.type %}
@@ -27,7 +24,7 @@
     {% endfor %}
   </div>
   
-  <figure class="col-span-1 border-4 border-primary h-full">
+  <figure class="col-span-1 border-4 border-primary w-full aspect-square">
     <img
       class="w-full h-full object-center"
       style="object-fit: {{ section.settings.image_fit }};"
@@ -46,6 +43,7 @@
       "type": "select",
       "id": "order",
       "label": "Order",
+      "info": "The order the image will and text will go on desktop screen sizes.",
       "default": "0",
       "options": [
         {
@@ -57,16 +55,6 @@
           "label": "Image then Text"
         }
       ]
-    },
-    {
-      "type": "range",
-      "id": "section_height",
-      "label": "Section Height",
-      "unit": "px",
-      "min": 300,
-      "max": 1000,
-      "step": 50,
-      "default": 500
     },
     {
       "type": "image_picker",

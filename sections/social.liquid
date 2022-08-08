@@ -1,0 +1,147 @@
+<div class="container grid grid-cols-3 xl:grid-cols-5 grid-rows-[repeat(5,_minmax(0,_15rem))] md:grid-rows-[repeat(4,_minmax(0,_20rem))] xl:grid-rows-2 gap-8 xl:h-[40rem]">
+  <figure class="col-start-1 col-span-3 md:col-span-2 row-start-2 lg:row-start-1 row-span-1 lg:row-span-2 border-4 border-primary">
+    <img
+      class="w-full h-full object-cover object-center"
+      src="{{ section.settings.image_1 | img_url: 'grande' }}"
+      draggable="false"
+    />
+  </figure>
+
+  <div class="col-start-1 lg:col-start-3 col-span-3 lg:col-span-1 row-start-1 row-span-1 border-4 border-primary border-dashed flex flex-col gap-2 items-center justify-center text-center pb-2">
+    {% if section.settings.show_heading %}
+      <h1 class="text-2xl font-semibold">
+        {{ section.settings.heading_text }}
+      </h1>
+    {% endif %}
+
+    {% if section.settings.show_description %}
+      <div>
+        {{ section.settings.description_richtext }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.show_link %}
+      <a
+        class="link link-primary"
+        href="{{ section.settings.link_url }}"
+      >
+        {{ section.settings.link_text }}
+      </a>
+    {% endif %}
+  </div>
+ 
+  <figure class="col-start-1 md:col-start-3 col-span-3 md:col-span-1 row-start-3 md:row-start-2 row-span-1 border-4 border-primary">
+    <img
+      class="w-full h-full object-cover object-center"
+      src="{{ section.settings.image_2 | img_url: 'grande' }}"
+      draggable="false"
+    />
+  </figure>
+
+  <figure class="col-start-1 xl:col-start-4 col-span-3 xl:col-span-2 row-start-4 md:row-start-3 xl:row-start-1 row-span-1 border-4 border-primary">
+    <img
+      class="w-full h-full object-cover object-center"
+      src="{{ section.settings.image_3 | img_url: 'grande' }}"
+      draggable="false"
+    />
+  </figure>
+
+  <figure class="col-start-1 xl:col-start-4 col-span-3 xl:col-span-2 row-start-5 md:row-start-4 xl:row-start-2 row-span-1 border-4 border-primary">
+    <img
+      class="w-full h-full object-cover object-center"
+      src="{{ section.settings.image_4 | img_url: 'grande' }}"
+      draggable="false"
+    />
+  </figure>
+</div>
+
+{% schema %}
+{
+  "name": "Social",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_heading",
+      "label": "Show heading",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Heading text",
+      "default": "Social Heading"
+    },
+    {
+      "type": "header",
+      "content": "Description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show description",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "description_richtext",
+      "label": "Description text",
+      "default": "<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_link",
+      "label": "Show link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link text",
+      "default": "@our_social_name"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link url"
+    },
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Image 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_4",
+      "label": "Image 4"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Social"
+    }
+  ]
+}
+{% endschema %}

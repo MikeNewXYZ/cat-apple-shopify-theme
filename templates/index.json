@@ -60,11 +60,15 @@
         "description",
         "button"
       ]
+    },
+    "social": {
+      "type": "social"
     }
   },
   "order": [
     "hero",
     "image_and_text",
-    "image_and_text_reversed"
+    "image_and_text_reversed",
+    "social"
   ]
 }

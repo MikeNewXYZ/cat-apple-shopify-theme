@@ -2108,6 +2108,16 @@ body[dir="rtl"] .checkbox:checked,
   --tw-placeholder-opacity: 0.2;
 }
 
+.link-primary {
+  --tw-text-opacity: 1;
+  color: hsl(var(--p) / var(--tw-text-opacity));
+}
+
+.link-primary:hover {
+  --tw-text-opacity: 1;
+  color: hsl(var(--pf, var(--p)) / var(--tw-text-opacity));
+}
+
 .link:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -3220,12 +3230,60 @@ body[dir="rtl"] .checkbox:checked,
   grid-column: span 2 / span 2;
 }
 
+.col-span-3 {
+  grid-column: span 3 / span 3;
+}
+
 .col-start-2 {
   grid-column-start: 2;
 }
 
+.col-start-1 {
+  grid-column-start: 1;
+}
+
+.col-start-3 {
+  grid-column-start: 3;
+}
+
+.col-start-5 {
+  grid-column-start: 5;
+}
+
+.col-start-4 {
+  grid-column-start: 4;
+}
+
 .row-span-1 {
   grid-row: span 1 / span 1;
+}
+
+.row-span-2 {
+  grid-row: span 2 / span 2;
+}
+
+.row-span-3 {
+  grid-row: span 3 / span 3;
+}
+
+.row-start-1 {
+  grid-row-start: 1;
+}
+
+.row-start-2 {
+  grid-row-start: 2;
+}
+
+.row-start-3 {
+  grid-row-start: 3;
+}
+
+.row-start-4 {
+  grid-row-start: 4;
+}
+
+.row-start-5 {
+  grid-row-start: 5;
 }
 
 .my-1 {
@@ -3333,6 +3391,10 @@ body[dir="rtl"] .checkbox:checked,
   aspect-ratio: 1 / 1;
 }
 
+.aspect-video {
+  aspect-ratio: 16 / 9;
+}
+
 .h-52 {
   height: 13rem;
 }
@@ -3381,6 +3443,10 @@ body[dir="rtl"] .checkbox:checked,
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
+}
+
+.h-\[40rem\] {
+  height: 40rem;
 }
 
 .min-h-screen {
@@ -3518,8 +3584,32 @@ body[dir="rtl"] .checkbox:checked,
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.grid-cols-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
 .grid-rows-1 {
   grid-template-rows: repeat(1, minmax(0, 1fr));
+}
+
+.grid-rows-2 {
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+
+.grid-rows-4 {
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+}
+
+.grid-rows-\[repeat\(4\2c _minmax\(0\2c _10rem\)\)\] {
+  grid-template-rows: repeat(4, minmax(0, 10rem));
+}
+
+.grid-rows-\[repeat\(4\2c _minmax\(0\2c _20rem\)\)\] {
+  grid-template-rows: repeat(4, minmax(0, 20rem));
+}
+
+.grid-rows-\[repeat\(5\2c _minmax\(0\2c _15rem\)\)\] {
+  grid-template-rows: repeat(5, minmax(0, 15rem));
 }
 
 .flex-row {
@@ -3693,6 +3783,11 @@ body[dir="rtl"] .checkbox:checked,
 
 .bg-transparent {
   background-color: transparent;
+}
+
+.bg-red-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-25 {
@@ -4003,6 +4098,38 @@ body[dir="rtl"] .checkbox:checked,
     line-height: 2;
   }
 
+  .md\:col-span-2 {
+    grid-column: span 2 / span 2;
+  }
+
+  .md\:col-span-1 {
+    grid-column: span 1 / span 1;
+  }
+
+  .md\:col-start-1 {
+    grid-column-start: 1;
+  }
+
+  .md\:col-start-3 {
+    grid-column-start: 3;
+  }
+
+  .md\:row-span-1 {
+    grid-row: span 1 / span 1;
+  }
+
+  .md\:row-start-2 {
+    grid-row-start: 2;
+  }
+
+  .md\:row-start-3 {
+    grid-row-start: 3;
+  }
+
+  .md\:row-start-4 {
+    grid-row-start: 4;
+  }
+
   .md\:mb-6 {
     margin-bottom: 1.5rem;
   }
@@ -4035,6 +4162,10 @@ body[dir="rtl"] .checkbox:checked,
 
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .md\:grid-rows-\[repeat\(4\2c _minmax\(0\2c _20rem\)\)\] {
+    grid-template-rows: repeat(4, minmax(0, 20rem));
   }
 
   .md\:flex-row {
@@ -4113,8 +4244,24 @@ body[dir="rtl"] .checkbox:checked,
     --tab-padding: 1.25rem;
   }
 
+  .lg\:col-span-1 {
+    grid-column: span 1 / span 1;
+  }
+
   .lg\:col-start-2 {
     grid-column-start: 2;
+  }
+
+  .lg\:col-start-3 {
+    grid-column-start: 3;
+  }
+
+  .lg\:row-span-2 {
+    grid-row: span 2 / span 2;
+  }
+
+  .lg\:row-start-1 {
+    grid-row-start: 1;
   }
 
   .lg\:mb-16 {
@@ -4161,6 +4308,10 @@ body[dir="rtl"] .checkbox:checked,
     height: 100%;
   }
 
+  .lg\:h-\[40rem\] {
+    height: 40rem;
+  }
+
   .lg\:w-auto {
     width: auto;
   }
@@ -4191,6 +4342,14 @@ body[dir="rtl"] .checkbox:checked,
 
   .lg\:grid-cols-7 {
     grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+
+  .lg\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .lg\:grid-rows-2 {
+    grid-template-rows: repeat(2, minmax(0, 1fr));
   }
 
   .lg\:flex-row {
@@ -4226,8 +4385,24 @@ body[dir="rtl"] .checkbox:checked,
 }
 
 @media (min-width: 1280px) {
+  .xl\:col-span-2 {
+    grid-column: span 2 / span 2;
+  }
+
   .xl\:col-start-2 {
     grid-column-start: 2;
+  }
+
+  .xl\:col-start-4 {
+    grid-column-start: 4;
+  }
+
+  .xl\:row-start-1 {
+    grid-row-start: 1;
+  }
+
+  .xl\:row-start-2 {
+    grid-row-start: 2;
   }
 
   .xl\:block {
@@ -4246,6 +4421,10 @@ body[dir="rtl"] .checkbox:checked,
     height: 100%;
   }
 
+  .xl\:h-\[40rem\] {
+    height: 40rem;
+  }
+
   .xl\:w-1\/2 {
     width: 50%;
   }
@@ -4256,6 +4435,14 @@ body[dir="rtl"] .checkbox:checked,
 
   .xl\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .xl\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .xl\:grid-rows-2 {
+    grid-template-rows: repeat(2, minmax(0, 1fr));
   }
 }
 

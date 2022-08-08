@@ -3464,6 +3464,14 @@ body[dir="rtl"] .checkbox:checked,
   height: 90%;
 }
 
+.h-10 {
+  height: 2.5rem;
+}
+
+.h-0 {
+  height: 0px;
+}
+
 .min-h-screen {
   min-height: 100vh;
 }
@@ -3504,6 +3512,10 @@ body[dir="rtl"] .checkbox:checked,
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
+}
+
+.w-10 {
+  width: 2.5rem;
 }
 
 .max-w-lg {
@@ -3696,6 +3708,10 @@ body[dir="rtl"] .checkbox:checked,
 
 .gap-y-4 {
   row-gap: 1rem;
+}
+
+.gap-y-0 {
+  row-gap: 0px;
 }
 
 .overflow-hidden {

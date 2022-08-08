@@ -1,0 +1,21 @@
+<div class="flex flex-col justify-center items-center text-center gap-4 md:gap-8 h-full">
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when 'heading' %}
+        <h1 class="text-xl md:text-4xl font-semibold">
+          {{ block.settings.heading_text }}
+        </h1>
+      {% when 'description' %}
+        <div class="text-sm md:text-md">
+          {{ block.settings.description_richtext }}
+        </div>
+      {% when 'button' %}
+        <a
+          class="btn btn-primary btn-sm md:btn-md text-lg md:text-xl w-full max-w-xs"
+          href="{{ block.settings.button_url }}"
+        >
+          {{ block.settings.button_text }}
+        </a>
+    {% endcase %}
+  {% endfor %}
+</div>

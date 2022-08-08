@@ -19,9 +19,52 @@
         "description",
         "button"
       ]
+    },
+    "image_and_text_reversed": {
+      "type": "image-and-text",
+      "settings": {
+        "order": "1"
+      },
+      "blocks": {
+        "heading": {
+          "type": "heading"
+        },
+        "description": {
+          "type": "description"
+        }  ,
+        "button": {
+          "type": "button"
+        }  
+      },
+      "block_order": [
+        "heading",
+        "description",
+        "button"
+      ]
+    },
+    "hero": {
+      "type" :"hero",
+      "blocks": {
+        "heading": {
+          "type": "heading"
+        },
+        "description": {
+          "type": "description"
+        }  ,
+        "button": {
+          "type": "button"
+        }  
+      },
+      "block_order": [
+        "heading",
+        "description",
+        "button"
+      ]
     }
   },
   "order": [
-    "image_and_text"
+    "hero",
+    "image_and_text",
+    "image_and_text_reversed"
   ]
 }

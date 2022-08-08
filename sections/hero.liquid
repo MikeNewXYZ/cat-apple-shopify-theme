@@ -1,0 +1,100 @@
+<div class="container grid xl:grid-cols-2 grid-rows-1 gap-20 xl:h-[60vh]">
+  <div class="col-span-1 row-span-1">
+    <div class="relative w-full h-[30rem] md:h-auto md:aspect-square xl:h-full border-4 border-primary border-dashed">
+      <div class="absolute inset-0 w-full h-full border-4 border-primary translate-x-3 md:translate-x-5 translate-y-3 md:translate-y-5">
+        <div class="absolute inset-0 w-full h-full z-20 p-4 block xl:hidden text-neutral-content">
+          {% render 'hero-content-blocks' %}
+        </div>
+
+        <div class="absolute inset-0 w-full h-full z-10 bg-neutral bg-opacity-50 block xl:hidden">
+        </div>
+
+        <img
+          class="absolute inset-0 w-full h-full object-cover object-center bg-base-100"
+          src="{{ section.settings.main_image | img_url: 'grande' }}"
+          draggable="false"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="col-start-2 col-span-1 row-span-1 hidden xl:block">
+    <div class="w-full h-full border-4 border-primary border-dashed p-4">
+      {% render 'hero-content-blocks' %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "section",
+  "settings": [
+    {
+    "type": "image_picker",
+    "id": "main_image",
+    "label": "Main Image"
+    }
+  ],
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "name": "Heading",
+      "type": "heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading_text",
+          "label": "Heading Text",
+          "default": "Lorem ipsum dolor sit!"
+        }
+      ]
+    },
+    {
+      "name": "Description",
+      "type": "description",
+      "settings": [
+        {
+          "type": "text",
+          "id": "description_richtext",
+          "label": "Description Text",
+          "default": "<p><b>Aliquip ad duis irure officia</b> eu minim sit sint ea veniam reprehenderit deserunt velit ea. Ex commodo cupidatat Lorem nisi laborum eu adipisicing sit eiusmod occaecat do proident. Ullamco voluptate laboris anim eu do consequat ipsum quis tempor ea sit deserunt deserunt incididunt. Incididunt fugiat laborum veniam cillum esse ad ad incididunt magna sint excepteur est. Deserunt reprehenderit consectetur officia incididunt quis laboris sunt. Officia quis laboris magna commodo consectetur ea. In eiusmod commodo culpa excepteur ullamco ex labore in anim ea est elit amet aliquip.</p>"
+        }
+      ]
+    },
+    {
+      "name": "Button",
+      "type": "button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Lorem Ipsum"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "description"
+        },
+        {
+          "type": "button"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -63,12 +63,16 @@
     },
     "social": {
       "type": "social"
+    },
+    "newsletter": {
+      "type": "newsletter"
     }
   },
   "order": [
     "hero",
     "image_and_text",
     "image_and_text_reversed",
-    "social"
+    "social",
+    "newsletter"
   ]
 }

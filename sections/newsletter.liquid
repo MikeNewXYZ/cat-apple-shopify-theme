@@ -1,0 +1,79 @@
+<div class="container flex justify-center pt-10 md:pt-20 pb-12 md:pb-24">
+  <div class="w-full max-w-xl flex flex-col text-center">
+    <h1 class="text-4xl font-semibold">
+      {{ section.settings.heading_text }}
+    </h1>
+
+    <div class="mt-4">
+      {{ section.settings.description_richtext }}
+    </div>
+
+    {% form 'customer' %}
+      {% if form.errors contains 'email' %}
+        {% assign input_style = 'input-error' %}
+      {% else %}
+        {% assign input_style = 'input-primary' %}
+      {% endif %}
+
+      <div class="flex flex-col md:flex-row gap-2 justify-center items-center mt-10">
+        <input
+          class="input {{ input_style }} input-bordered w-full md:flex-[2]"
+          type="email"
+          placeholder="{{ section.settings.email_placeholder_text }}"
+          name="contact[email]"
+        />
+
+        <input
+          class="btn btn-primary w-full md:flex-[1]"
+          type="submit"
+          value="{{ section.settings.sign_up_button_text }}"
+        />
+      </div>
+
+      {% if form.errors contains 'email' %}
+        <p class="text-error mt-4">
+          Please enter a valid email address.
+        </p>
+      {% endif %}
+    {% endform %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "tag": "section",
+  "class": "border-y-4 border-primary border-dashed",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Heading text",
+      "default": "Join Our Mailing List"
+    },
+    {
+      "type": "richtext",
+      "id": "description_richtext",
+      "label": "Description text",
+      "default": "<p>Veniam labore ex proident culpa magna proident exercitation labore. Sunt magna deserunt esse occaecat et eiusmod tempor. Excepteur officia nisi ut magna ea mollit consectetur sit in ad aliqua.</p>"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder_text",
+      "label": "Email input placeholder text",
+      "default": "Enter Your Email"
+    },
+    {
+      "type": "text",
+      "id": "sign_up_button_text",
+      "label": "Sign up button text",
+      "default": "Sign up"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter"
+    }
+  ]
+}
+{% endschema %}

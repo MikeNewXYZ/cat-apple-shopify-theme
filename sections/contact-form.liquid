@@ -26,7 +26,7 @@
         Email
       </label>
 
-      {% if form.errors contains 'body' %}
+      {% if form.errors contains 'email' %}
         {% assign input_style = 'input-error' %}
       {% else %}
         {% assign input_style = 'input-primary' %}

@@ -3771,6 +3771,10 @@ body[dir="rtl"] .checkbox:checked,
   overflow-x: hidden;
 }
 
+.overflow-y-visible {
+  overflow-y: visible;
+}
+
 .truncate {
   overflow: hidden;
   text-overflow: ellipsis;

@@ -37,9 +37,11 @@
       href="{{ routes.cart_url }}"
     >
       <div class="indicator">
-        {% render 'icon',
-          type: 'shopping-bag'
-        %}
+        <div x-ref="cartButtonIcon">
+          {% render 'icon',
+            type: 'shopping-bag'
+          %}
+        </div>
         <span
           class="indicator-item text-xs -right-1 -top-1"
           x-text="$store.cart.data.item_count"
@@ -58,7 +60,18 @@
 document.addEventListener("alpine:init", () => {
   Alpine.data("header", () => ({
     showSearchModal: false,
-    showMenuDrawer: false
+    showMenuDrawer: false,
+    init() {
+      this.$watch("$store.cart.data.item_count", this.cartItemAddedAnimation.bind(this))
+    },
+    cartItemAddedAnimation() {
+      anime({
+        targets: this.$refs.cartButtonIcon,
+        rotate: [0, -20, 20, 0],
+        duration: 750,
+        easing: "easeOutQuint",
+      })
+    }
   }))
 })  
 </script>

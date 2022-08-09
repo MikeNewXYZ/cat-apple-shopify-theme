@@ -1,4 +1,8 @@
-<div class="card card-compact w-full bg-base-100 border-2 border-primary">
+<div
+  class="card card-compact w-full bg-base-100 border-2 border-primary"
+  x-data="productCard"
+  x-ref="card"
+>
   <figure
     class="h-60 border-b-2 border-primary bg-neutral relative overflow-hidden"
     x-data="{ hover: false }"
@@ -55,6 +59,8 @@
         <a
           class="btn btn-primary w-full"
           href="{{ product.url }}"
+          @mouseEnter="handleMouseEnter"
+          @mouseLeave="handleMouseLeave"
         >
           View Product
         </a>
@@ -62,3 +68,32 @@
     </div>
   </div>
 </div>
+
+<script>
+document.addEventListener("alpine:init", () => {
+  Alpine.data("productCard", () => ({
+    handleMouseEnter() {
+      if (anime.get(this.$refs.card, "opacity") !== "1") return
+
+      anime({
+        targets: this.$refs.card,
+        scale: 1.05,
+        duration: 500,
+        loop: true,
+        direction: "alternate"
+      })
+    },
+    handleMouseLeave() {
+      if (anime.get(this.$refs.card, "opacity") !== "1") return
+
+      anime.remove(this.$refs.card)
+
+      anime({
+        targets: this.$refs.card,
+        scale: 1,
+        duration: 500
+      })
+    }
+  }))
+})
+</script>

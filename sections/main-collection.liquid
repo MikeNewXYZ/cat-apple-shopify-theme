@@ -1,13 +1,19 @@
 <div x-data="collection">
   <hr class="divider divider-primary mt-0" />
 
-  <h1 class="container text-center text-4xl md:text-6xl font-semibold mb-4 md:mb-6">
+  <h1
+    class="container text-center text-4xl md:text-6xl font-semibold mb-4 md:mb-6"
+    x-ref="heading"
+  >
     {{ collection.title }}
   </h1>
 
   <hr class="divider divider-primary" />
 
-  <div class="container flex flex-col md:flex-row justify-start md:justify-end gap-4">
+  <div
+    class="container flex flex-col md:flex-row justify-start md:justify-end gap-4"
+    x-ref="filters"
+  >
     <div class="form-control w-full max-w-xs">
       <label class="label font-semibold">
         Filter By
@@ -61,7 +67,10 @@
   </div>
 
   {% paginate collection.products by section.settings.pagination %}
-    <div class="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-14">
+    <div
+      class="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-14"
+      x-ref="productCards"
+    >
       {% for product in collection.products %}
         {% render 'product-card',
           product: product
@@ -70,7 +79,10 @@
     </div>
 
     {% if paginate.pages > 1 %}
-      <div class="container mt-8 md:mt-10 flex justify-center">
+      <div
+        class="container mt-8 md:mt-10 flex justify-center"
+        x-ref="pagination"
+      >
         {% render 'pagination',
           paginate: paginate
         %}
@@ -84,6 +96,31 @@ document.addEventListener("alpine:init", () => {
   Alpine.data("collection", () => ({
     init() {
       this.checkIfEnoughItemsForPage()
+      this.introAnimation()
+    },
+    introAnimation() {
+      const tl = anime.timeline()
+
+      tl.add({
+        targets: this.$refs.heading,
+        translateY: [50, 0],
+        opacity: [0, 1]
+      }).add({
+        targets: this.$refs.filters.children,
+        translateX: [20, 0],
+        opacity: [0, 1],
+        delay: anime.stagger(100)
+      }, "-=750").add({
+        targets: this.$refs.productCards.children,
+        translateY: [-20, 0],
+        opacity: [0, 1],
+        duration: 500,
+        delay: anime.stagger(100)
+      }, "-=750").add({
+        targets: this.$refs.pagination,
+        translateY: [20, 0],
+        opacity: [0, 1]
+      }, "-=750")
     },
     checkIfEnoughItemsForPage() {
       const pagination = parseInt("{{ section.settings.pagination }}")

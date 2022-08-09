@@ -1,4 +1,8 @@
-<div class="container grid grid-cols-3 xl:grid-cols-5 grid-rows-[repeat(5,_minmax(0,_15rem))] md:grid-rows-[repeat(4,_minmax(0,_20rem))] xl:grid-rows-2 gap-8 xl:h-[40rem]">
+<div
+  class="container grid grid-cols-3 xl:grid-cols-5 grid-rows-[repeat(5,_minmax(0,_15rem))] md:grid-rows-[repeat(4,_minmax(0,_20rem))] xl:grid-rows-2 gap-8 xl:h-[40rem]"
+  style="opacity: 0;"
+  x-data="social"  
+>
   <figure class="col-start-1 col-span-3 md:col-span-2 row-start-2 lg:row-start-1 row-span-1 lg:row-span-2 border-4 border-primary">
     <img
       class="w-full h-full object-cover object-center"
@@ -54,6 +58,33 @@
     />
   </figure>
 </div>
+
+<script>
+document.addEventListener("alpine:init", () => {
+  Alpine.data("social", () => ({
+    waypoint: null,
+    init() {
+      this.waypoint = new Waypoint({
+        element: this.$el,
+        offset: "50%",
+        handler: this.introAnimation.bind(this)
+      })
+    },
+    introAnimation() {
+      this.waypoint.destroy()
+      
+      anime({
+        targets: this.$el.children,
+        opacity: [0, 1],
+        scale: [0.5, 1],
+        delay: anime.stagger(100),
+        easing: "easeOutElastic(1, 2)",
+        begin: () => this.$el.style.opacity = 1
+      })
+    }
+  }))
+})
+</script>
 
 {% schema %}
 {

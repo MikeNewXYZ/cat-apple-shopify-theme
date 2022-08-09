@@ -81,6 +81,7 @@
     {% if paginate.pages > 1 %}
       <div
         class="container mt-8 md:mt-10 flex justify-center"
+        x-cloak
         x-ref="pagination"
       >
         {% render 'pagination',

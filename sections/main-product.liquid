@@ -1,4 +1,7 @@
-<div class="container">
+<div
+  class="container"
+  x-data="product"
+>
   <div class="w-full lg:h-[50rem] flex flex-row">
     {% if product.images != blank %}
       <div class="lg:flex-1 w-full hidden lg:block">
@@ -17,6 +20,24 @@
     {% render 'product-description' %}
   </div>
 </div>
+
+<script>
+document.addEventListener("alpine:init", () => {
+  Alpine.data("product", () => ({
+    init() {
+      this.introAnimation()
+    },
+    introAnimation() {
+      anime({
+        targets: this.$el.children,
+        opacity: [0, 1],
+        translateY: [100, 0],
+        delay: anime.stagger(500)
+      })
+    }
+  }))
+})
+</script>
 
 {% schema %}
 {

@@ -1,4 +1,4 @@
-<div x-data="{ tab: 'description' }">
+<div x-data="productDescription">
   <div class="tabs tabs-boxed bg-transparent w-fit gap-y-4">
     <button
       class="tab lg:tab-lg text-xl lg:text-2xl font-semibold pb-1"
@@ -27,23 +27,41 @@
 
   <hr class="divider divider-primary mt-0" />
 
-  <div class="text-xl">
+  <div
+    class="text-xl"
+    x-ref="tabContents"
+  >
     <template x-if="tab === 'description'">
-      <p>
+      <p x-init="onTabContentInit">
         {{ product.description }}
       </p>
     </template>
 
     <template x-if="tab === 'shippingPolicy'">
-      <div>
+      <div x-init="onTabContentInit">
         {{ shop.shipping_policy.body }}
       </div>
     </template>
 
     <template x-if="tab === 'refundPolicy'">
-      <div>
+      <div x-init="onTabContentInit">
         {{ shop.refund_policy.body }}
       </div>
     </template>
   </div>
 </div>
+
+<script>
+document.addEventListener("alpine:init", () => {
+  Alpine.data("productDescription", () => ({
+    tab: "description",
+    onTabContentInit() {
+      anime({
+        targets: this.$el,
+        opacity: [0, 1],
+        translateY: [-20, 0],
+      })
+    }
+  }))
+})
+</script>

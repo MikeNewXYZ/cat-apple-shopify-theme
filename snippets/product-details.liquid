@@ -110,11 +110,12 @@
       class="btn text-xl btn-lg flex-1 w-full gap-2"
       @click="$store.cart.add([{ id: currentVariant.id, quantity: quantity }])"
     >
-      {% render 'icon',
-        type: 'shopping-bag',
-        class: 'w-6 h-6 mb-0.5'
-      %}
-
+      <div x-ref="buttonIcon">
+        {% render 'icon',
+          type: 'shopping-bag',
+          class: 'w-6 h-6 mb-0.5'
+        %}
+      </div>
       <span>Add to Cart</span>
     </button>
   </div>
@@ -128,6 +129,7 @@ document.addEventListener("alpine:init", () => {
     quantity: 1,
     init() {
       this.$watch('currentVariant', this.setUrlSearchVariant)
+      this.$watch('currentVariant', this.variantChangeAnimation.bind(this))
     },
     setCurrentVariant(el) {
       const rawFormData = new FormData(el)
@@ -149,6 +151,25 @@ document.addEventListener("alpine:init", () => {
     },
     setUrlSearchVariant({ id }) {
       history.pushState({variant: id}, "", `?variant=${id}`)
+    },
+    variantChangeAnimation() {
+      const tl = anime.timeline()
+      tl.add({
+        targets: this.$refs.buttonIcon,
+        translateY: [0, -10],
+        duration: 500,
+        easing: "easeOutQuint",
+      }).add({
+        targets: this.$refs.buttonIcon,
+        rotate: [0, -10, 10, 0],
+        duration: 500,
+        easing: "easeOutQuint",
+      }).add({
+        targets: this.$refs.buttonIcon,
+        translateY: 0,
+        duration: 500,
+        easing: "easeOutQuint",
+      }, "+=250")
     }
   }))
 })

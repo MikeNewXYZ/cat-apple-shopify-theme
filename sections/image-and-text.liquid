@@ -1,7 +1,13 @@
-<div class="container grid lg:grid-cols-2 grid-rows-1 gap-8 items-center overflow-hidden">
+<div
+  class="container grid lg:grid-cols-2 grid-rows-1 gap-8 items-center overflow-hidden"
+  style="opacity: 0"
+  x-data="imageAndText"
+  data-order="{{ section.settings.order }}"
+>
   <div
     class="col-span-1 max-lg:order-[0_!important]"
     style="order: {{ section.settings.order }}"
+    x-ref="text"
   >
     {% for block in section.blocks %}
       {% case block.type %}
@@ -24,7 +30,10 @@
     {% endfor %}
   </div>
   
-  <figure class="col-span-1 border-4 border-primary w-full aspect-square">
+  <figure
+    class="col-span-1 border-4 border-primary w-full aspect-square"
+    x-ref="image"
+  >
     <img
       class="w-full h-full object-center"
       style="object-fit: {{ section.settings.image_fit }};"
@@ -33,6 +42,51 @@
     />
   </figure>
 </div>
+
+<script>
+document.addEventListener("alpine:init", () => {
+  Alpine.data("imageAndText", () => ({
+    waypoint: null,
+    init() {
+      this.waypoint = new Waypoint({
+        element: this.$el,
+        offset: "50%",
+        handler: this.introAnimation.bind(this)
+      })
+    },
+    introAnimation() {
+      this.waypoint.destroy()
+
+      const tl = anime.timeline({
+        begin: () => this.$el.style.opacity = 1,
+        easing: "easeOutElastic(1, 2)"
+      })
+
+      tl.add({
+        targets: this.$refs.text,
+        translateX: (e) => {
+          if (parseInt(this.$el.dataset.order) === 0) {
+            return ["-100vw", "0vw"]
+          } else {
+            return ["100vw", "0vw"]
+          }
+        },
+        opacity: [0, 1]
+      }).add({
+        targets: this.$refs.image,
+        translateX: (e) => {
+          if (parseInt(this.$el.dataset.order) === 0) {
+            return ["100vw", "0vw"]
+          } else {
+            return ["-100vw", "0vw"]
+          }
+        },
+        opacity: [0, 1]
+      }, "-=500")
+    }
+  }))
+})
+</script>
 
 {% schema %}
 {

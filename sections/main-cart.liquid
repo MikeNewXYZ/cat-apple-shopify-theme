@@ -1,10 +1,16 @@
 <template x-data x-if="$store.cart.data.item_count > 0">
-  <div class="container">
-    <h1 class="text-4xl md:text-5xl font-semibold text-center mb-8 lg:mb-16">
+  <div class="container overflow-hidden" style="opacity: 0;" x-data="cart">
+    <h1
+      class="text-4xl md:text-5xl font-semibold text-center mb-8 lg:mb-16"
+      x-ref="heading"
+    >
       Shopping Cart
     </h1>
   
-    <div class="hidden lg:grid grid-cols-7 text-3xl font-semibold">
+    <div
+      class="hidden lg:grid grid-cols-7 text-3xl font-semibold"
+      x-ref="sectionTitles"
+    >
       <h3 class="col-span-4">Product</h3>
   
       <h3 class="col-span-1">Quantity</h3>
@@ -16,7 +22,7 @@
   
     <div
       class="flex flex-col"
-      x-data
+      x-ref="items"
     >
       <template x-for="(cartItem, index) in $store.cart.data.items">
         {% render 'cart-item' %}
@@ -24,7 +30,10 @@
     </div>
 
 
-    <div class="flex flex-col gap-2 lg:items-end lg:text-right mt-8">
+    <div
+      class="flex flex-col gap-2 lg:items-end lg:text-right mt-8"
+      x-ref="details"
+    >
       <h3 class="text-3xl">
         <span class="font-semibold">Total:</span>
         <span
@@ -41,7 +50,7 @@
       </p>
 
       <a
-        class="btn btn-primary w-full lg:max-w-xs text-lg gap-2 mt-4"
+        class="btn btn-primary w-full lg:max-w-xs text-lg gap-2 mt-4 transition-none"
         href="/checkout"
       >
         {% render 'icon',
@@ -80,6 +89,58 @@
 
   </div>
 </template>
+
+<script>
+document.addEventListener("alpine:init", () => {
+  Alpine.data("cart", () => ({
+    init() {
+      this.$nextTick(() => this.introAnimation())
+    },
+    introAnimation() {
+      const tl = anime.timeline({
+        begin: () => {
+          this.$el.style.opacity = 1
+        }
+      })
+
+      tl.add({
+        targets: this.$refs.heading,
+        opacity: [0, 1],
+        translateY: [50, 0],
+        duration: 500
+      }).add({
+        targets: this.$refs.sectionTitles.children,
+        opacity: [0, 1],
+        translateY: [50, 0],
+        duration: 500,
+        delay: anime.stagger(100)
+      }, "-=250").add({
+        targets: this.$refs.items.children,
+        opacity: [0, 1],
+        translateX: (e, index) => {
+          if (e.tagName === "TEMPLATE") return
+ 
+          if (index % 2) {
+            return ["100vw", "0vw"]
+          } else {
+            return ["-100vw", "0vw"]
+          }
+
+        },
+        duration: 750,
+        delay: anime.stagger(100),
+        easing: "easeOutQuint"
+      }, "-=250").add({
+        targets: this.$refs.details.children,
+        opacity: [0, 1],
+        translateX: [50, 0],
+        duration: 500,
+        delay: anime.stagger(100)
+      }, "-=250")
+    }
+  }))
+})
+</script>
 
 {% schema %}
 {

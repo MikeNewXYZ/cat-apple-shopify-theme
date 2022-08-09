@@ -1,5 +1,8 @@
-<div class="container">
-  <div class="text-center">
+<div class="container" style="opacity: 0;" x-data="highlight">
+  <div
+    class="text-center"
+    x-ref="text"
+  >
     <h1 class="text-4xl font-semibold">
       {{ section.settings.heading_text }}
     </h1>
@@ -9,7 +12,10 @@
     </div>
   </div>
 
-  <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-14">
+  <div
+    class="mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-14"
+    x-ref="highlights"
+  >
     {% for block in section.blocks %}
       {% case block.type %}
         {% when 'highlight' %}
@@ -37,6 +43,41 @@
 
   </div>
 </div>
+
+<script>
+document.addEventListener("alpine:init", () => {
+  Alpine.data("highlight", () => ({
+    waypoint: null,
+    init() {
+      this.waypoint = new Waypoint({
+        element: this.$el,
+        offset: "50%",
+        handler: this.introAnimation.bind(this)
+      })
+    },
+    introAnimation() {
+      this.waypoint.destroy()
+      
+      const tl = anime.timeline({
+        easing: "easeOutElastic(1, 2)",
+        begin: () => this.$el.style.opacity = 1
+      })
+
+      tl.add({
+        targets: this.$refs.text.children,
+        opacity: [0, 1],
+        scale: [0.5, 1],
+        delay: anime.stagger(100),
+      }).add({
+        targets: this.$refs.highlights.children,
+        opacity: [0, 1],
+        scale: [0.5, 1],
+        delay: anime.stagger(100),
+      }, "-=500")  
+    }
+  }))
+})
+</script>
 
 {% schema %}
 {

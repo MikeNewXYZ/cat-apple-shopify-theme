@@ -1,49 +1,91 @@
-<div class="container flex justify-center pt-10 md:pt-20 pb-12 md:pb-24">
-  <div class="w-full max-w-xl flex flex-col text-center">
-    <h1 class="text-4xl font-semibold">
-      {{ section.settings.heading_text }}
-    </h1>
+<div
+  class="border-y-4 border-primary border-dashed"
+  style="opacity: 0;"
+  x-data="newsletter"  
+>
+  <div class="container flex justify-center pt-10 md:pt-20 pb-12 md:pb-24">
+    <div
+      class="w-full max-w-xl flex flex-col text-center"
+      x-ref="content"
+    >
+      <h1 class="text-4xl font-semibold">
+        {{ section.settings.heading_text }}
+      </h1>
 
-    <div class="mt-4">
-      {{ section.settings.description_richtext }}
-    </div>
-
-    {% form 'customer' %}
-      {% if form.errors contains 'email' %}
-        {% assign input_style = 'input-error' %}
-      {% else %}
-        {% assign input_style = 'input-primary' %}
-      {% endif %}
-
-      <div class="flex flex-col md:flex-row gap-2 justify-center items-center mt-10">
-        <input
-          class="input {{ input_style }} input-bordered w-full md:flex-[2]"
-          type="email"
-          placeholder="{{ section.settings.email_placeholder_text }}"
-          name="contact[email]"
-        />
-
-        <input
-          class="btn btn-primary w-full md:flex-[1]"
-          type="submit"
-          value="{{ section.settings.sign_up_button_text }}"
-        />
+      <div class="mt-4">
+        {{ section.settings.description_richtext }}
       </div>
 
-      {% if form.errors contains 'email' %}
-        <p class="text-error mt-4">
-          Please enter a valid email address.
-        </p>
-      {% endif %}
-    {% endform %}
+      {% form 'customer' %}
+        {% if form.errors contains 'email' %}
+          {% assign input_style = 'input-error' %}
+        {% else %}
+          {% assign input_style = 'input-primary' %}
+        {% endif %}
+
+        <div class="flex flex-col md:flex-row gap-2 justify-center items-center mt-10">
+          <input
+            class="input {{ input_style }} input-bordered w-full md:flex-[2]"
+            type="email"
+            placeholder="{{ section.settings.email_placeholder_text }}"
+            name="contact[email]"
+          />
+
+          <input
+            class="btn btn-primary w-full md:flex-[1]"
+            type="submit"
+            value="{{ section.settings.sign_up_button_text }}"
+          />
+        </div>
+
+        {% if form.errors contains 'email' %}
+          <p class="text-error mt-4">
+            Please enter a valid email address.
+          </p>
+        {% endif %}
+      {% endform %}
+    </div>
   </div>
 </div>
+
+
+<script>
+document.addEventListener("alpine:init", () => {
+  Alpine.data("newsletter", () => ({
+    waypoint: null,
+    init() {
+      this.waypoint = new Waypoint({
+        element: this.$el,
+        offset: "50%",
+        handler: this.introAnimation.bind(this)
+      })
+    },
+    introAnimation() {
+      this.waypoint.destroy()
+      
+      const tl = anime.timeline()
+
+      tl.add({
+        targets: this.$el,
+        opacity: [0, 1],
+        translateY: [50, 0],
+        easing: "easeOutQuint",
+      }).add({
+        targets: this.$refs.content.children,
+        opacity: [0, 1],
+        scale: [0.5, 1],
+        delay: anime.stagger(100),
+        easing: "easeOutElastic(1, 2)"
+      }, "-=750")
+    }
+  }))
+})
+</script>
 
 {% schema %}
 {
   "name": "Newsletter",
   "tag": "section",
-  "class": "border-y-4 border-primary border-dashed",
   "settings": [
     {
       "type": "text",

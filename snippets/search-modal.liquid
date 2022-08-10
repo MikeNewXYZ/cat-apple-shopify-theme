@@ -41,9 +41,9 @@
           class="input input-bordered input-primary input-md md:input-lg w-full"
           type="text"
           placeholder="Search Product"
+          x-ref="searchInput"
           @input.debounce.750="(e) => searchProduct(e.target.value)"
         />
-
         {%- comment -%}
           ANCHOR: Loading
         {%- endcomment -%}
@@ -136,7 +136,8 @@
         const tl = anime.timeline({
           begin: () => {
             this.$el.style.display = "block"
-          }
+          },
+          complete: () => this.$refs.searchInput.focus()
         })
 
         tl.add({
